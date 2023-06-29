@@ -27,9 +27,12 @@ Por otro lado, se creó un archivo "clases.py" donde están las clases auxiliare
 
 Finalmente, se utilizó el AST para estructurar la salida de los datos como se estableció en el enunciado de esta etapa.
 
-PD: Se logró hacer la tabla del parse pero no se logró construir el AST, por ende, la impresión del AST no se llevó acabo.
+PD: No se logro crear el AST, por lo que no fue posible hacer el print esperado, sin embargo, se esta generando la tabla del parse (yacc esta reconociendo las reglas sintacticas). El manejo de errores tambien funciona. 
 
-*inserte meme adecuado de sufrimiento*
+Lo unico que nos freno fue que no se nos ocurrio como crear el arbol correctamente y que los nodos tuviesen los hijos que debian tener... 
+*Inserte_el_meme_mas_conveniente*
+
+PD2: El estado del proyecto en la etapa 2 para la fecha de entrega la conseguira en la carpeta "Entrega_Etapa2" dentro del repositorio de git. 
 
 ## Ejecución:
 

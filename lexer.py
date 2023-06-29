@@ -6,99 +6,37 @@ import sys
 
 cont = 0
 
-#Lista de tokens:
-
-tokens = ('TkComa', 'TkParAbre', 'TkParCierra', 'TkAsignacion', 'TkPuntoYComa', 'TkMas', 'TkMenos',
-          'TkIdent', 'TkNumLit', 'TkMult', 'TkDiv', 'TkDisyuncion', 'TkConjuncion', 'TkNegacion', 'TkMenor',
-          'TkMenorIgual', 'TkMayorIgual', 'TkMayor', 'TkIgual', 'TkDesigual',  'TkConcatHorizontal', 
-          'TkConcatVertical', 'TkTrue', 'TkFalse', 'TkRotacion', 'TkTransposicion', 'TkMod', 'TkCanvasLit',
-          'TkIf', 'TkThen', 'TkOtherwise', 'TkDone', 'TkWhile', 'TkRepeat', 'TkWith', 'TkFrom', 'TkTo', 'TkUsing',
-          'TkOf', 'TkType', 'TkInteger', 'TkBoolean', 'TkCanvas', 'TkBegin', 'TkEnd', 'TkPrint', 'TkRead')
-
 
 #Palabras reservadas:
-"""
-def t_Tk(t):
-    r'if|then|otherwise|done|while|repeat|with|from|to|using|of|type|integer|boolean|canvas|begin|end|print|read'
-    return t
-"""
 
-def t_TkIf(t):
-   r'if'
-   return t
+reservado = {
+    'if':'TkIf',
+    'then':'TkThen',
+    'otherwise':'TkOtherwise',
+    'done':'TkDone',
+    'while':'TkWhile',
+    'repeat':'TkRepeat',
+    'with':'TkWith',
+    'from':'TkFrom',
+    'to':'TkTo',
+    'using':'TkUsing',
+    'of':'TkOf',
+    'type':'TkType',
+    'integer':'TkInteger',
+    'boolean':'TkBoolean',
+    'canvas':'TkCanvas',
+    'begin':'TkBegin',
+    'end':'TkEnd',
+    'print':'TkPrint',
+    'read':'TkRead'
+}
 
-def t_TkThen(t):
-    r'then'
-    return t 
+#Lista de tokens:
 
-def t_TkOtherwise(t):
-    r'otherwise'
-    return t
-
-def t_TkDone(t):
-    r'done'
-    return t 
-
-def t_TkWhile(t):
-    r'while'
-    return t 
-
-def t_TkRepeat(t):
-    r'repeat'
-    return t 
-
-def t_TkWith(t):
-    r'with'
-    return t 
-
-def t_TkFrom(t):
-    r'from'
-    return t 
-
-def t_TkTo(t):
-    r'to'
-    return t 
-
-def t_TkUsing(t):
-    r'using'
-    return t 
-
-def t_TkOf(t):
-    r'of'
-    return t 
-
-def t_TkType(t):
-    r'type'
-    return t 
-
-def t_TkInteger(t):
-    r'integer'
-    return t 
-
-def t_TkBoolean(t):
-    r'boolean'
-    return t
-
-def t_TkCanvas(t):
-    r'canvas'
-    return t 
-
-def t_TkBegin(t):
-    r'begin'
-    return t 
-
-def t_TkEnd(t):
-    r'end'
-    return t 
-
-def t_TkPrint(t):
-    r'print' 
-    return t 
-
-def t_TkRead(t):
-    r'read'
-    return t 
-
+tokens = ['TkComa', 'TkParAbre', 'TkParCierra', 'TkAsignacion', 'TkPuntoYComa', 'TkMas', 'TkMenos',
+          'TkIdent', 'TkNumLit', 'TkMult', 'TkDiv', 'TkDisyuncion', 'TkConjuncion', 'TkNegacion', 'TkMenor',
+          'TkMenorIgual', 'TkMayorIgual', 'TkMayor', 'TkIgual', 'TkDesigual',  'TkConcatHorizontal', 
+          'TkConcatVertical', 'TkTrue', 'TkFalse', 'TkRotacion', 'TkTransposicion', 'TkMod', 'TkCanvasLit'] + list(reservado.values())
 
 #Literales Booleanos:
 
@@ -148,6 +86,7 @@ def t_TkNumLit(t):
 
 def t_TkIdent(t):
     r'[a-zA-Z][a-zA-Z]*[0-9]*'
+    t.type = reservado.get(t.value, 'TkIdent')
     return t
 
 #Literales de lienzo:
@@ -202,20 +141,20 @@ archivo.close()
 
 # lexer.input(datos)
 
-# #Hacemos una corrida en busca de errores
+# # #Hacemos una corrida en busca de errores
 
 # while True:
 #     tok = lexer.token()
 #     if not tok: 
 #         break
 
-# #"Reseteamos" el lexer para imprimir los tokes si no se encontraron errores
+# # #"Reseteamos" el lexer para imprimir los tokes si no se encontraron errores
 
 # lexer.input(datos)
 # lexer.lineno = 1
 # lexer.lexpos = 0
 
-# #Imprimimos los tokens con su tipo, fila y columna
+# # #Imprimimos los tokens con su tipo, fila y columna
 
 # linecnt = 1
 
