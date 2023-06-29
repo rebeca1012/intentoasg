@@ -40,7 +40,7 @@ class Pparser(object):
     def p_error(self, p):
         if p:
             print('Error sintactico:  Token inesperado "%s" en la linea %d, columna %d ' 
-                % (p.type, p.lineno, Lexer.find_column(p.lexer.lexdata, p)))
+                % (p.type, p.lineno, Pparser.find_column(p.lexer.lexdata, p)))
         else:
             print("EOF Inesperado")
         exit(1)
