@@ -144,14 +144,12 @@ class Print(Node):
     #def print_object(self, profund):
     #    return f'{"-"*profund}{self.exp}'    
 
-
-
 #------        
 
 #OPERADORES ARITMÉTICOS -------------
 
-#Mas
-class Mas(Node):
+#Expresion Binaria
+class Expresion_Binaria(Node):
     def __init__(self, izq, opr, der):
         self.izq = izq
         self.opr = opr
@@ -160,16 +158,6 @@ class Mas(Node):
 
     #def print_object(self, profund):
     #    return f'{"-"*profund}Mas\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-
-#Menos
-class Menos(Node):
-    def __init__(self, nodo, hijos):
-        self.nodo = nodo
-        self.hijos = hijos
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Menos\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
 
 #Unary Menos
 class UMenos(Node):
@@ -182,129 +170,6 @@ class UMenos(Node):
     
     #def print_object(self, profund):
     #    return f'{"-"*profund}UMenos\n{self.exp.print_object(profund+1)}'
-
-
-#Multiplicación
-class Mult(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Mult\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-
-#División
-class Div(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Div\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#Modulo
-class Mod(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Mod\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#Conjuncion
-class Conjuncion(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Conjuncion\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#Disyunción
-class Disyuncion(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Disyuncion\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#Igual
-class Igual(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Igual\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-    
-#Desigual
-class Desigual(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Desigual\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#Menor
-class Menor(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Menor\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#MenorIgual
-class MenorIgual(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}MenorIgual\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#Mayor   
-class Mayor(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Mayor\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-#MayorIgual
-class MayorIgual(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}MayorIgual\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
 
 #Asginación 
 class Asignacion(Node):
@@ -326,31 +191,6 @@ class Negacion(Node):
     
     #def print_object(self, profund):
     #    return f'{"-"*profund}Negacion\n{self.exp.print_object(profund+1)}'
-
-
-#Concatenación Horizontal
-class ConcatHorizontal(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}ConcatHorizontal\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
-
-#Concatenación Vertical
-class ConcatVertical(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
-        self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}ConcatVertical\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'  
-
 
 #Rotación
 class Rotacion(Node):

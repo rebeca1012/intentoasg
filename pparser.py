@@ -164,35 +164,35 @@ class Pparser(object):
                             | EXPRESION TkConcatHorizontal EXPRESION
                             | EXPRESION TkConcatVertical EXPRESION'''
         if p[2] == Lexer.t_TkMas:
-            p[0] = AST.Mas(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMenos:
-            p[0] = AST.Menos(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMult:
-            p[0] = AST.Mult(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkDiv:
-            p[0] = AST.Div(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMod:
-            p[0] = AST.Mod(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkConjuncion:
-            p[0] = AST.Conjuncion(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkDisyuncion:
-            p[0] = AST.Disyuncion(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMenor:
-            p[0] = AST.Menor(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMayor:
-            p[0] = AST.Mayor(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMenorIgual:
-            p[0] = AST.MenorIgual(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMayorIgual:
-            p[0] = AST.MayorIgual(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkIgual:
-            p[0] = AST.Igual(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkDesigual:
-            p[0] = AST.Desigual(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkConcatHorizontal:
-            p[0] = AST.ConcatHorizontal(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkConcatVertical:
-            p[0] = AST.ConcatVertical(p[1], p[2], p[3])
+            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
 
     def p_EXPRESION_UNARIA(self, p):
         '''EXPRESION_UNARIA : TkParAbre EXPRESION TkParCierra
