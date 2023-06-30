@@ -230,7 +230,7 @@ class TypeChecker(NodeVisitor):
         inits.reverse()
         for init in inits:
             if (not table.put(VariableSymbol(init.id, node.type))):
-                print 'Line '+str(init.line)+': variable '+ init.id+' alreday declared'
+                print ('Line '+str(init.line)+': variable '+ init.id+' alreday declared')
 
     def visit_Inits(self, node, table):
         if ( node.inits ):
@@ -265,11 +265,11 @@ class TypeChecker(NodeVisitor):
         rightType = self.visit(node.expression, table)
 
         if leftType == None:
-            print 'Line '+str(node.expression.line)+': Variable '+ node.id+' is not declared'
+            print ('Line '+str(node.expression.line)+': Variable '+ node.id+' is not declared')
         elif rightType == 'undefined':
             return
         elif not (leftType == rightType or (leftType == 'float' and rightType == 'integer')):
-            print 'Line '+str(node.expression.line)+': Incorrect assignment - '+rightType+' to '+leftType
+            print ('Line '+str(node.expression.line)+': Incorrect assignment - '+rightType+' to '+leftType)
 
     def visit_Choice(self, node, table):
         self.visit(node.condition, table)
@@ -292,7 +292,7 @@ class TypeChecker(NodeVisitor):
             if rettype != 'undefined':
                 expectedRettype = table.name.type
                 if rettype != expectedRettype:
-                    print 'Line '+str(node.expression.line)+': incorrect return type, expected  '+expectedRettype+', found '+rettype
+                    print ('Line '+str(node.expression.line)+': incorrect return type, expected  '+expectedRettype+', found '+rettype)
 
     def visit_Keyword(self, node, table):
         #print node.keyword
@@ -333,10 +333,10 @@ class TypeChecker(NodeVisitor):
         if isinstance(symbol, VariableSymbol):
             return symbol.type
         elif isinstance(symbol, FunctionSymbol):
-            print 'Line '+str(node.line)+': '+node.name+' is a function expected a variable '
+            print ('Line '+str(node.line)+': '+node.name+' is a function expected a variable ')
             return 'undefined'
         else:
-            print 'Line '+str(node.line)+': '+node.name+' is not declared '
+            print ('Line '+str(node.line)+': '+node.name+' is not declared ')
             return 'undefined'
 
     def visit_BinExpression(self, node, table):
@@ -351,7 +351,7 @@ class TypeChecker(NodeVisitor):
 
         result_type = self.check_new_type(type1,operator,type2)
         if result_type == 'undefined':
-            print 'Line '+str(node.line)+': Operator '+node.operator+' is not allowed here'
+            print ('Line '+str(node.line)+': Operator '+node.operator+' is not allowed here')
             return 'undefined'
 
         return result_type
@@ -383,16 +383,16 @@ class TypeChecker(NodeVisitor):
                 return 'undefined'
 
             if len(expressionsTypes) != len(expectedExpressionsTypes):
-                print 'Line '+str(node.line)+': Wrong number of parameters, expected '+str(len(expectedExpressionsTypes))+', found '+str(len(expressionsTypes))
+                print ('Line '+str(node.line)+': Wrong number of parameters, expected '+str(len(expectedExpressionsTypes))+', found '+str(len(expressionsTypes)))
 
             for exprType, expectedType, i in zip(expressionsTypes, expectedExpressionsTypes,
                                                  range(1, len(expressionsTypes) + 1)):
                 if exprType != expectedType and not (exprType == 'integer' and expectedType == 'float'):
-                    print 'Line '+str(node.line)+': Incorrect type of parameter, expected '+expectedType+", found "+exprType
+                    print ('Line '+str(node.line)+': Incorrect type of parameter, expected '+expectedType+", found "+exprType)
                     return 'undefined'
             return symbol.type
         else:
-            print 'Line '+str(node.line)+': '+node.id+' is not a function or undefined'
+            print ('Line '+str(node.line)+': '+node.id+' is not a function or undefined')
             return 'undefined'
 
     def visit_ExpressionList(self, node, table):
@@ -418,13 +418,13 @@ class TypeChecker(NodeVisitor):
         arguments.reverse()
         funcSymbol = FunctionSymbol(node.id, node.type, arguments)
         if not table.put(funcSymbol):
-            print 'Line '+str(node.argList.line)+': '+node.id+' already defined'
+            print ('Line '+str(node.argList.line)+': '+node.id+' already defined')
 
         functionTable = SymbolTable(table, funcSymbol)
 
         for arg in arguments:
             if not functionTable.put(VariableSymbol(arg.id, arg.type)):
-                print 'Line '+str(node.argList.line)+': Parameter ' + arg.id + ' already declared'
+                print ('Line '+str(node.argList.line)+': Parameter ' + arg.id + ' already declared')
 
         self.visit(node.compoundInstruction, functionTable)
 
