@@ -257,7 +257,7 @@ class TypeChecker(NodeVisitor):
         #print node.id
         return self.visit(node.instruction, table)
 
-    def visit_Assignment(self, node, table):
+    def visit_Asignacion(self, node, table):
         #print node.id
         leftType = None
         leftSymbol = table.get(node.id)
@@ -272,21 +272,6 @@ class TypeChecker(NodeVisitor):
         elif not (leftType == rightType or (leftType == 'float' and rightType == 'integer')):
             print ('Line '+str(node.expression.line)+': Incorrect assignment - '+rightType+' to '+leftType)
 
-    def visit_Choice(self, node, table):
-        self.visit(node.condition, table)
-        self.visit(node.instruction1, SymbolTable(table, 'choice_instr1'))
-        if (node.instruction2):
-            self.visit(node.instruction2, SymbolTable(table, 'choice_instr2'))
-
-
-    # def visit_While(self, node, table):
-    #     self.visit(node.condition, table)
-    #     self.visit(node.instruction, SymbolTable(table, 'while'))
-    #     pass
-
-    # def visit_Repeat(self, node, table):
-    #     self.visit(node.condition, table)
-    #     self.visit(node.instruction, SymbolTable(table, 'repeat'))
     
     #Visitar While
     def visit_While(self, node, table):
@@ -304,7 +289,22 @@ class TypeChecker(NodeVisitor):
         #print node.keyword
         pass
 
-    def visit_CompoundInstruction(self, node, table):
+    # def visit_CompoundInstruction(self, node, table):
+    #     #newSCOPe
+    #     nextTable = None
+    #     if isinstance(table.name, FunctionSymbol):
+    #         nextTable = table
+    #     else:
+    #         nextTable = SymbolTable(table, 'blockInstr')
+
+    #     self.visit(node.declarations, nextTable)
+    #     self.visit(node.instructions, nextTable)
+
+    #crear en symboltable una clase casi idéntica a FunctionSymbol para las declaraciones.
+    #debe tener como atributos lo que sea que llevan las declaraciones. así como una función
+    #tiene un nombre, argumentos y un tipo, una declaración debe tener sus propios atributos. (?
+    #entiendo que esta función declara un nuevo scope
+    def visit_Declaraciones(self, node, table):
         #newSCOPe
         nextTable = None
         if isinstance(table.name, FunctionSymbol):
@@ -312,37 +312,35 @@ class TypeChecker(NodeVisitor):
         else:
             nextTable = SymbolTable(table, 'blockInstr')
 
-        self.visit(node.declarations, nextTable)
-        self.visit(node.instructions, nextTable)
+        self.visit(node.secuencia_declaracion, nextTable)
+        self.visit(node.secuenciacion, nextTable)        
 
-    def visit_Condition(self, node, table):
-        return self.visit(node.expression, table)
+    def visit_If(self, node, table):
+        self.visit(node.guardia, table)
+        self.visit(node.secuenciacion, SymbolTable(table, 'if'))
+
+    # def visit_Condition(self, node, table):
+    #     return self.visit(node.expression, table)
 
     def visit_Integer(self, node, table):
         return 'integer'
     
-    #Agregado
     def visit_Canvas(self, node, table):
         return 'canvas'
 
     def visit_Boolean(self, node, table):
         return 'boolean'
         
-    #def visit_Float(self, node, table):
-    #    return 'float'
 
-    #def visit_String(self, node, table):
-    #    return 'string'
-
-    def visit_Variable(self, node, table):
-        symbol = table.get(node.name)
+    def visit_Id(self, node, table):
+        symbol = table.get(node.id)
         if isinstance(symbol, VariableSymbol):
             return symbol.type
         elif isinstance(symbol, FunctionSymbol):
-            print ('Line '+str(node.line)+': '+node.name+' is a function expected a variable ')
+            print ('Line '+str(node.line)+': '+node.id+' is a function expected a variable ')
             return 'undefined'
         else:
-            print ('Line '+str(node.line)+': '+node.name+' is not declared ')
+            print ('Line '+str(node.line)+': '+node.id+' is not declared ')
             return 'undefined'
 
     def visit_Expresion_Binaria(self, node, table):
