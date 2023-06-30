@@ -210,12 +210,13 @@ class TypeChecker(NodeVisitor):
             return 'undefined'
         #return self.ttype[op][expr1][expr2]
 
+    #Esto sería entrada
     def visit_Program(self, node, table):
         symbolTable = SymbolTable(None, 'global')
         self.visit(node.declarations, symbolTable)
         self.visit(node.fundefs, symbolTable)
         self.visit(node.instructions, symbolTable)
-
+    
     def visit_Declarations(self, node, table):
         self.visit(node.declarations, table)
         self.visit(node.declaration, table)
@@ -277,22 +278,27 @@ class TypeChecker(NodeVisitor):
         if (node.instruction2):
             self.visit(node.instruction2, SymbolTable(table, 'choice_instr2'))
 
+
+    # def visit_While(self, node, table):
+    #     self.visit(node.condition, table)
+    #     self.visit(node.instruction, SymbolTable(table, 'while'))
+    #     pass
+
+    # def visit_Repeat(self, node, table):
+    #     self.visit(node.condition, table)
+    #     self.visit(node.instruction, SymbolTable(table, 'repeat'))
+    
+    #Visitar While
     def visit_While(self, node, table):
-        self.visit(node.condition, table)
-        self.visit(node.instruction, SymbolTable(table, 'while'))
+        self.visit(node.expresion, table)
+        self.visit(node.secuenciacion, SymbolTable(table, 'while'))
         pass
 
-    def visit_Repeat(self, node, table):
-        self.visit(node.condition, table)
-        self.visit(node.instruction, SymbolTable(table, 'repeat'))
+    #Visitar From
+    def visit_From(self, node, table):
+        self.visit(node.expresion, table)
+        self.visit(node.secuenciacion, SymbolTable(table, 'from'))
 
-    def visit_Return(self, node, table):
-        if isinstance(table.name, FunctionSymbol):
-            rettype = self.visit(node.expression, table)
-            if rettype != 'undefined':
-                expectedRettype = table.name.type
-                if rettype != expectedRettype:
-                    print ('Line '+str(node.expression.line)+': incorrect return type, expected  '+expectedRettype+', found '+rettype)
 
     def visit_Keyword(self, node, table):
         #print node.keyword
@@ -339,104 +345,25 @@ class TypeChecker(NodeVisitor):
             print ('Line '+str(node.line)+': '+node.name+' is not declared ')
             return 'undefined'
 
-    def visit_BinExpression(self, node, table):
+    def visit_Expresion_Binaria(self, node, table):
         #print node.operator
-        type1 = self.visit(node.expression1, table)
-        type2 = self.visit(node.expression2, table)
+        type1 = self.visit(node.izq, table)
+        type2 = self.visit(node.der, table)
 
         if type1 == 'undefined' or type2 == 'undefined':
             return 'undefined'
 
-        operator = node.operator
+        operator = node.opr
 
         result_type = self.check_new_type(type1,operator,type2)
         if result_type == 'undefined':
-            print ('Line '+str(node.line)+': Operator '+node.operator+' is not allowed here')
+            print ('Line '+str(node.line)+': Operator '+node.opr+' is not allowed here')
             return 'undefined'
 
         return result_type
 
-    def visit_ExpressionInParentheses(self, node, table):
-        return self.visit(node.expression, table)
-
-    def visit_Funcall(self, node, table):
-        #print node.id
-        symbol = table.get(node.id)
-        if isinstance(symbol, FunctionSymbol):
-
-            expressions = []
-            tmp = node.expressionList
-            if not isinstance(tmp, AST.Empty):
-                if (tmp.expression):
-                    expressions.append(tmp.expression)
-                while (tmp.expressionList):
-                    tmp = tmp.expressionList
-                    if (not isinstance(tmp, AST.Empty)):
-                        expressions.append(tmp.expression)
-            expressions.reverse()
-            expressionsTypes = [self.visit(expression, table) for expression in expressions]
-            #print expressionsTypes
-            expectedExpressionsTypes = [arg.type for arg in symbol.arguments]
-            #print expectedExpressionsTypes
-
-            if 'undefined' in expressionsTypes:
-                return 'undefined'
-
-            if len(expressionsTypes) != len(expectedExpressionsTypes):
-                print ('Line '+str(node.line)+': Wrong number of parameters, expected '+str(len(expectedExpressionsTypes))+', found '+str(len(expressionsTypes)))
-
-            for exprType, expectedType, i in zip(expressionsTypes, expectedExpressionsTypes,
-                                                 range(1, len(expressionsTypes) + 1)):
-                if exprType != expectedType and not (exprType == 'integer' and expectedType == 'float'):
-                    print ('Line '+str(node.line)+': Incorrect type of parameter, expected '+expectedType+", found "+exprType)
-                    return 'undefined'
-            return symbol.type
-        else:
-            print ('Line '+str(node.line)+': '+node.id+' is not a function or undefined')
-            return 'undefined'
-
-    def visit_ExpressionList(self, node, table):
-        if (node.expressionList):
-            self.visit(node.expressionList, table)
-        if (node.expression):
-            self.visit(node.expression, table)
-
-    def visit_FunctionDefinitions(self, node, table):
-        self.visit(node.fundef, table)
-        self.visit(node.fundefs, table)
-
-    def visit_FunctionDefinition(self, node, table):
-        arguments = []
-        tmp = node.argList
-        if not isinstance(tmp, AST.Empty):
-            if (tmp.arg):
-                arguments.append(tmp.arg)
-            while (tmp.argList):
-                tmp = tmp.argList
-                if (not isinstance(tmp, AST.Empty)):
-                    arguments.append(tmp.arg)
-        arguments.reverse()
-        funcSymbol = FunctionSymbol(node.id, node.type, arguments)
-        if not table.put(funcSymbol):
-            print ('Line '+str(node.argList.line)+': '+node.id+' already defined')
-
-        functionTable = SymbolTable(table, funcSymbol)
-
-        for arg in arguments:
-            if not functionTable.put(VariableSymbol(arg.id, arg.type)):
-                print ('Line '+str(node.argList.line)+': Parameter ' + arg.id + ' already declared')
-
-        self.visit(node.compoundInstruction, functionTable)
-
-    def visit_ArgumentList(self, node, table):
-        if (node.argList):
-            self.visit(node.argList, table)
-        if (node.arg):
-            self.visit(node.arg, table)
-
-    def visit_Argument(self, node, table):
-        #print node.type, node.id
-        pass
+    def visit_Parentesis(self, node, table):
+        return self.visit(node.expresion, table)
 
     def visit_Empty(self, node, table):
         pass
