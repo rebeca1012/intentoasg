@@ -1,6 +1,6 @@
 import AST
 from lexer import Lexer
-from TypeChecker import TypeChecker
+from checktipo import TypeChecker
 
 
 class Pparser(object):
@@ -83,13 +83,13 @@ class Pparser(object):
         p[0] = AST.Tipo(p[1])
 
     def p_SECUENCIACION(self, p):
-        '''SECUENCIACION : INSTRUCCION_IF
-                        | INSTRUCCION_WITH
-                        | INSTRUCCION_FROM
-                        | INSTRUCCION_WHILE
-                        | INSTRUCCION_ASIGNACION
-                        | INSTRUCCION_IO
-                        | DECLARACIONES'''
+        '''SECUENCIACION : INSTRUCCION_IF SECUENCIACION
+                        | INSTRUCCION_WITH SECUENCIACION
+                        | INSTRUCCION_FROM SECUENCIACION
+                        | INSTRUCCION_WHILE SECUENCIACION
+                        | INSTRUCCION_ASIGNACION SECUENCIACION
+                        | INSTRUCCION_IO SECUENCIACION
+                        | DECLARACIONES SECUENCIACION'''
         p[0] = AST.Secuenciacion(p[1])
 
     def p_SECUENCIACION_1(self, p):
@@ -109,20 +109,20 @@ class Pparser(object):
                 p[0] = AST.If(p[2], p[3])
 
     def p_INSTRUCCION_WITH(self, p):
-        '''INSTRUCCION_WITH : TkWith TkIdent TkFrom COTA_INF TkTo COTA_SUP TkRepeat SECUENCIACION TkDone TkPuntoYComa SECUENCIACION'''
+        '''INSTRUCCION_WITH : TkWith TkIdent TkFrom COTA_INF TkTo COTA_SUP TkRepeat SECUENCIACION TkDone TkPuntoYComa'''
         p[0] = AST.With(p[2], p[4], p[6], p[8])
 
     def p_INSTRUCCION_FROM(self, p):
-        '''INSTRUCCION_FROM : TkFrom COTA_INF TkTo COTA_SUP TkRepeat SECUENCIACION TkDone TkPuntoYComa SECUENCIACION'''
-        p[0] = AST.From("FROM", p[2], p[4], p[6])
+        '''INSTRUCCION_FROM : TkFrom COTA_INF TkTo COTA_SUP TkRepeat SECUENCIACION TkDone TkPuntoYComa'''
+        p[0] = AST.From(p[2], p[4], p[6])
 
     def p_INSTRUCCION_WHILE(self, p):
         '''INSTRUCCION_WHILE : TkWhile EXPRESION TkRepeat SECUENCIACION TkDone'''
         p[0] = AST.While(p[2], p[4])
 
     def p_INSTRUCCION_ASIGNACION(self, p):
-        '''INSTRUCCION_ASIGNACION : TkIdent TkAsignacion EXPRESION TkPuntoYComa SECUENCIACION
-                                | TkIdent TkAsignacion EXPRESION SECUENCIACION'''
+        '''INSTRUCCION_ASIGNACION : TkIdent TkAsignacion EXPRESION TkPuntoYComa
+                                | TkIdent TkAsignacion EXPRESION'''
         p[0] = AST.Asignacion(p[1], p[3])
 
     def p_INSTRUCCION_IO(self, p):
