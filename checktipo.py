@@ -204,7 +204,7 @@ class TypeChecker(NodeVisitor):
     #debe tener como atributos lo que sea que llevan las declaraciones. así como una función
     #tiene un nombre, argumentos y un tipo, una declaración debe tener sus propios atributos. (?
     #entiendo que esta función declara un nuevo scope
-    def visit_Declaraciones(self, node, table):
+    def visit_Declaraciones2(self, node, table):
         #newSCOPe
         nextTable = None
         if isinstance(table.name, FunctionSymbol):
