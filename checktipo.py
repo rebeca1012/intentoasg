@@ -217,45 +217,42 @@ class TypeChecker(NodeVisitor):
         self.visit(node.fundefs, symbolTable)
         self.visit(node.instructions, symbolTable)
     
-    def visit_Declarations(self, node, table):
-        self.visit(node.declarations, table)
-        self.visit(node.declaration, table)
+    def visit_Secuencia_Declaracion(self, node, table):
+        self.visit(node.secuencia_declaracion, table)
+        self.visit(node.declaracion, table)
 
-    def visit_Declaration(self, node, table):
-        inits = []
-        tmp = node.inits
-        inits.append(tmp.init)
-        while (tmp.inits):
-            tmp = tmp.inits
-            inits.append(tmp.init)
-        inits.reverse()
-        for init in inits:
-            if (not table.put(VariableSymbol(init.id, node.type))):
-                print ('Line '+str(init.line)+': variable '+ init.id+' alreday declared')
+    def visit_Declaracion(self, node, table):
+        variables = []
+        tmp = node.variables
+        variables.append(tmp.variable)
+        while (tmp.variables):
+            tmp = tmp.variables
+            variables.append(tmp.variable)
+        variables.reverse()
+        for variable in variables:
+            if (not table.put(VariableSymbol(variable.id, node.type))):
+                print ('Line '+str(variable.line)+': variable '+ variable.id+' already declared')
 
-    def visit_Inits(self, node, table):
-        if ( node.inits ):
-            self.visit(node.inits, table)
-        self.visit(node.init, table)
+    #esto era inits de el
+    def visit_Variables(self, node, table):
+        if ( node.variables ):
+            self.visit(node.variables, table)
+        self.visit(node.variable, table)
 
-    def visit_Init(self, node, table):
-        #print node.ID
-        return self.visit(node.expression, table)
+    # def visit_Init(self, node, table):
+    #     #print node.ID
+    #     return self.visit(node.expression, table)
 
-    def visit_Instructions(self, node, table):
-        if ( node.instructions ):
-            self.visit(node.instructions, table)
-        self.visit(node.instruction, table)
+    def visit_Secuenciacion(self, node, table):
+        if ( node.secuenciacion ):
+            self.visit(node.secuenciacion, table)
+        self.visit(node.instruccion, table)
 
-    def visit_Instruction(self, node, table):
-        return self.visit(node.instruction, table)
+    # def visit_Instruction(self, node, table):
+    #     return self.visit(node.instruction, table)
 
     def visit_Print(self, node, table):
-        return self.visit(node.expression, table)
-
-    def visit_Labeled(self, node, table):
-        #print node.id
-        return self.visit(node.instruction, table)
+        return self.visit(node.expresion, table)
 
     def visit_Asignacion(self, node, table):
         #print node.id
@@ -263,15 +260,12 @@ class TypeChecker(NodeVisitor):
         leftSymbol = table.get(node.id)
         if leftSymbol:
             leftType = leftSymbol.type
-        rightType = self.visit(node.expression, table)
+        rightType = self.visit(node.der, table)
 
         if leftType == None:
-            print ('Line '+str(node.expression.line)+': Variable '+ node.id+' is not declared')
+            print ('Line '+str(node.der.line)+': Variable '+ node.id+' is not declared')
         elif rightType == 'undefined':
             return
-        elif not (leftType == rightType or (leftType == 'float' and rightType == 'integer')):
-            print ('Line '+str(node.expression.line)+': Incorrect assignment - '+rightType+' to '+leftType)
-
     
     #Visitar While
     def visit_While(self, node, table):
@@ -331,7 +325,7 @@ class TypeChecker(NodeVisitor):
     def visit_Boolean(self, node, table):
         return 'boolean'
         
-
+    #esto era la Variable de el
     def visit_Id(self, node, table):
         symbol = table.get(node.id)
         if isinstance(symbol, VariableSymbol):
