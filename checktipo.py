@@ -34,14 +34,6 @@ class TypeChecker(NodeVisitor):
         self.ttype['/'] = {}
         self.ttype['%'] = {}
         self.ttype['^'] = {}
-        #self.ttype['|'] = {}
-        #self.ttype['&'] = {}
-        #self.ttype['AND'] = {}
-        #self.ttype['OR'] = {}
-        #self.ttype['SHL'] = {}
-        #self.ttype['SHR'] = {}
-        #self.ttype['=='] = {}
-        #self.ttype['!='] = {}
         self.ttype['/\\'] = {}
         self.ttype['\\/'] = {}
         self.ttype['\^'] = {}
@@ -61,20 +53,6 @@ class TypeChecker(NodeVisitor):
         self.ttype['*']['integer'] = {}
         self.ttype['/']['integer'] = {}
         self.ttype['%']['integer'] = {}
-        #self.ttype['^']['integer'] = {}
-        
-        #self.ttype['&']['integer'] = {}
-        #self.ttype['AND']['integer'] = {}
-        #self.ttype['OR']['integer'] = {}
-        #self.ttype['SHL']['integer'] = {}
-        #self.ttype['SHR']['integer'] = {}
-
-        # self.ttype['==']['integer'] = {}
-        # self.ttype['!=']['integer'] = {}
-        # self.ttype['>']['integer'] = {}
-        # self.ttype['<']['integer'] = {}
-        # self.ttype['<=']['integer'] = {}
-        # self.ttype['>=']['integer'] = {}
 
 
 
@@ -95,47 +73,13 @@ class TypeChecker(NodeVisitor):
         self.ttype['$']['canvas'] = {}
         self.ttype['\|']['canvas'] = {}
 
-        # self.ttype['+']['float'] = {}
-        # self.ttype['-']['float'] = {}
-        # self.ttype['*']['float'] = {}
-        # self.ttype['/']['float'] = {}
-        # self.ttype['%']['float'] = {}
-        # self.ttype['==']['float'] = {}
-        # self.ttype['!=']['float'] = {}
-        # self.ttype['>']['float'] = {}
-        # self.ttype['<']['float'] = {}
-        # self.ttype['<=']['float'] = {}
-        # self.ttype['>=']['float'] = {}
-
-        # self.ttype['+']['string'] = {}
-        # self.ttype['*']['string'] = {}
-        # self.ttype['==']['string'] = {}
-        # self.ttype['!=']['string'] = {}
-        # self.ttype['>']['string'] = {}
-        # self.ttype['<']['string'] = {}
-        # self.ttype['<=']['string'] = {}
-        # self.ttype['>=']['string'] = {}
-
         #aritmética integer con integer
         self.ttype['+']['integer']['integer'] = 'integer'
         self.ttype['-']['integer']['integer'] = 'integer'
         self.ttype['*']['integer']['integer'] = 'integer'
         self.ttype['/']['integer']['integer'] = 'integer'
         self.ttype['%']['integer']['integer'] = 'integer'
-        #self.ttype['^']['integer']['integer'] = 'integer'
-        #self.ttype['|']['integer']['integer'] = 'integer'
-        #self.ttype['&']['integer']['integer'] = 'integer'
-        #self.ttype['AND']['integer']['integer'] = 'integer'
-        #self.ttype['OR']['integer']['integer'] = 'integer'
-        #self.ttype['SHL']['integer']['integer'] = 'integer'
-        #self.ttype['SHR']['integer']['integer'] = 'integer'
-        #si comparas un numero con un numero da un boolean
-        # self.ttype['==']['integer']['integer'] = 'integer'
-        # self.ttype['!=']['integer']['integer'] = 'integer'
-        # self.ttype['>']['integer']['integer'] = 'integer'
-        # self.ttype['<']['integer']['integer'] = 'integer'
-        # self.ttype['<=']['integer']['integer'] = 'integer'
-        # self.ttype['>=']['integer']['integer'] = 'integer'
+
 
         #comparar integer con integer
         self.ttype['=']['integer']['integer'] = 'boolean'
@@ -161,47 +105,6 @@ class TypeChecker(NodeVisitor):
         self.ttype['$']['canvas']['canvas'] = 'canvas'
         self.ttype['\|']['canvas']['canvas'] = 'canvas'
 
-        # self.ttype['+']['int']['float'] = 'float'
-        # self.ttype['-']['int']['float'] = 'float'
-        # self.ttype['*']['int']['float'] = 'float'
-        # self.ttype['/']['int']['float'] = 'float'
-        # self.ttype['==']['int']['float'] = 'int'
-        # self.ttype['!=']['int']['float'] = 'int'
-        # self.ttype['>']['int']['float'] = 'int'
-        # self.ttype['<']['int']['float'] = 'int'
-        # self.ttype['<=']['int']['float'] = 'int'
-        # self.ttype['>=']['int']['float'] = 'int'
-
-        # self.ttype['+']['float']['float'] = 'float'
-        # self.ttype['-']['float']['float'] = 'float'
-        # self.ttype['*']['float']['float'] = 'float'
-        # self.ttype['/']['float']['float'] = 'float'
-        # self.ttype['==']['float']['float'] = 'int'
-        # self.ttype['!=']['float']['float'] = 'int'
-        # self.ttype['>']['float']['float'] = 'int'
-        # self.ttype['<']['float']['float'] = 'int'
-        # self.ttype['<=']['float']['float'] = 'int'
-        # self.ttype['>=']['float']['float'] = 'int'
-
-        # self.ttype['+']['float']['int'] = 'float'
-        # self.ttype['-']['float']['int'] = 'float'
-        # self.ttype['*']['float']['int'] = 'float'
-        # self.ttype['/']['float']['int'] = 'float'
-        # self.ttype['==']['float']['int'] = 'int'
-        # self.ttype['!=']['float']['int'] = 'int'
-        # self.ttype['>']['float']['int'] = 'int'
-        # self.ttype['<']['float']['int'] = 'int'
-        # self.ttype['<=']['float']['int'] = 'int'
-        # self.ttype['>=']['float']['int'] = 'int'
-
-        # self.ttype['+']['string']['string'] = 'string'
-        # self.ttype['*']['string']['int'] = 'string'
-        # self.ttype['==']['string']['string'] = 'int'
-        # self.ttype['!=']['string']['string'] = 'int'
-        # self.ttype['>']['string']['string'] = 'int'
-        # self.ttype['<']['string']['string'] = 'int'
-        # self.ttype['<=']['string']['string'] = 'int'
-        # self.ttype['>=']['string']['string'] = 'int'
 
     def check_new_type(self, expr1, op, expr2):
         try:
@@ -210,12 +113,15 @@ class TypeChecker(NodeVisitor):
             return 'undefined'
         #return self.ttype[op][expr1][expr2]
 
-    #Esto sería entrada
-    def visit_Program(self, node, table):
+    
+    def visit_Entrada(self, node, table):
         symbolTable = SymbolTable(None, 'global')
-        self.visit(node.declarations, symbolTable)
-        self.visit(node.fundefs, symbolTable)
-        self.visit(node.instructions, symbolTable)
+        self.visit(node.declaraciones, symbolTable)
+    
+    #Esto era Programa
+    def visit_Declaraciones(self, node, table):        
+        self.visit(node.secuencia_declaracion, table)
+        self.visit(node.secuenciacion, table)
     
     def visit_Secuencia_Declaracion(self, node, table):
         self.visit(node.secuencia_declaracion, table)
