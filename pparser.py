@@ -207,11 +207,11 @@ class Pparser(object):
                 p[0] = AST.UMenos(p[2])
         elif len(p) == 3:
             if p[2] == Lexer.t_TkNegacion:
-                p[0] = AST.Negacion(p[1])
+                p[0] = AST.Negacion(p[2], p[1])
             elif p[1] == Lexer.t_TkRotacion:
-                p[0] = AST.Rotacion(p[2])
+                p[0] = AST.Rotacion(p[1], p[2])
             elif p[2] == Lexer.t_TkTransposicion:
-                p[0] = AST.Transposicion(p[1])
+                p[0] = AST.Transposicion(p[1], p[2])
                 
 
     def p_EXPRESION_TERMINAL(self, p):   

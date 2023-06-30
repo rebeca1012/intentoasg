@@ -319,11 +319,10 @@ class Asignacion(Node):
 
 #Negación
 class Negacion(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
+    def __init__(self, opr, expresion):
         self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
+        self.expresion = expresion
+        self.hijos = (opr, expresion)
     
     #def print_object(self, profund):
     #    return f'{"-"*profund}Negacion\n{self.exp.print_object(profund+1)}'
@@ -355,22 +354,20 @@ class ConcatVertical(Node):
 
 #Rotación
 class Rotacion(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
+    def __init__(self,opr, expresion):
         self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
+        self.expresion = expresion
+        self.hijos = (opr, expresion)
 
     #def print_object(self, profund):
     #    return f'{"-"*profund}Rotacion\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'  
 
 #Transposición
 class Transposicion(Node):
-    def __init__(self, izq, opr, der):
-        self.izq = izq
+    def __init__(self, expresion, opr):
+        self.expresion = expresion
         self.opr = opr
-        self.der = der
-        self.hijos = (izq, opr, der)
+        self.hijos = (expresion, opr)
 
     #def print_object(self, profund):
     #    return f'{"-"*profund}Transposicion\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'          
