@@ -75,9 +75,9 @@ while lexer.cont == 0:
 print("", end="\n")
 
 
-    
-# Pparser = Pparser()
-# parser = yacc.yacc(module=Pparser)
+ 
+Pparser = Pparser()
+parser = yacc.yacc(module=Pparser)
 # text = file.read()
 #ast = parser.parse(text, lexer=Pparser.scanner)
 #typeChecker = TypeChecker()

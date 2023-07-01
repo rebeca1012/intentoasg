@@ -15,8 +15,8 @@ class Pparser(object):
     
     #Precedencia de operadores:
     precedence = (
-        ('nonassoc', 'IF'),
-        ('nonassoc', 'ElSE'),
+        ('nonassoc', 'TkIf'),
+        ('nonassoc', 'TkOtherwise'),
         ('right', 'TkAsignacion'),
         ('left', 'TkDisyuncion'),
         ('left', 'TkConjuncion'),
