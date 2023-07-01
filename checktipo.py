@@ -107,7 +107,6 @@ class TypeChecker(NodeVisitor):
         self.ttype['\'']['canvas']['canvas'] = 'canvas'
         self.ttype['$']['canvas']['canvas'] = 'canvas'
         self.ttype['\|']['canvas']['canvas'] = 'canvas'
-        self.ttype['!=']['canvas']['canvas'] = 'boolean'
         self.ttype['\/=']['canvas']['canvas'] = 'boolean'
 
 
