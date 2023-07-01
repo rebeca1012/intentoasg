@@ -222,5 +222,9 @@ class Pparser(object):
                             | TkCanvasLit'''    
         if p[1] == Lexer.t_TkIdent:
             p[0] = AST.Id(p[1])
-        elif (p[1] == Lexer.t_TkNumLit) | (p[1] == Lexer.t_TkTrue) | (p[1] == Lexer.t_TkFalse) | (p[1] == Lexer.t_TkCanvasLit):
-            p[0] = AST.Terminal(p[1])
+        elif p[1] == Lexer.t_TkNumLit:
+            p[0] = AST.Integer(p[1])
+        elif (p[1] == Lexer.t_TkTrue) | (p[1] == Lexer.t_TkFalse):
+            p[0] = AST.Boolean(p[1])
+        elif p[1] == Lexer.t_TkCanvasLit:
+            p[0] = AST.Canvas(p[1])

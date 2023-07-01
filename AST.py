@@ -241,9 +241,19 @@ class Parentesis(Node):
         self.expresion = expresion
         self.hijos = (expresion)
 
-class Terminal(Node):
-    def __init__(self, literal):
-        self.literal = literal
+class Integer(Node):
+    def __init__(self, valor):
+        self.valor = valor
+        self.hijos = ()
+
+class Boolean(Node):
+    def __init__(self, valor):
+        self.valor = valor
+        self.hijos = ()
+
+class Canvas(Node):
+    def __init__(self, valor):
+        self.valor = valor
         self.hijos = ()
 
 class Empty(Node):
