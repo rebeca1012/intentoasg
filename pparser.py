@@ -8,8 +8,8 @@ class Pparser(object):
     salida = ""
 
     def __init__(self):
-        self.scanner = Lexer()
-        self.scanner.build()
+        self.lexer = Lexer()
+        self.lexer.build()
 
     tokens = Lexer.tokens
     
@@ -57,11 +57,11 @@ class Pparser(object):
 
     def p_SECUENCIA_DECLARACION(self, p):
         '''SECUENCIA_DECLARACION : DECLARACION TkPuntoYComa SECUENCIA_DECLARACION 
-                    | DECLARACION'''
+                    | VARIABLES TkOf TkType TIPO'''
         if len(p) == 4:
             p[0] = AST.Secuencia_Declaracion(p[1], p[3])
         else:
-            p[0] = AST.Secuencia_Declaracion(p[1])
+            p[0] = AST.Declaracion(p[1], p[4])
 
     def p_DECLARACION(self, p):
         'DECLARACION : VARIABLES TkOf TkType TIPO'
@@ -90,7 +90,7 @@ class Pparser(object):
                         | INSTRUCCION_ASIGNACION SECUENCIACION
                         | INSTRUCCION_IO SECUENCIACION
                         | DECLARACIONES2 SECUENCIACION'''
-        p[0] = AST.Secuenciacion(p[1])
+        p[0] = AST.Secuenciacion(p[1], p[2])
 
     def p_SECUENCIACION_1(self, p):
         '''SECUENCIACION : '''
