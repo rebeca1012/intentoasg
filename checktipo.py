@@ -98,7 +98,6 @@ class TypeChecker(NodeVisitor):
         self.ttype['\\/']['boolean']['boolean'] = 'boolean'
         self.ttype['\^']['boolean']['boolean'] = 'boolean'
         self.ttype['=']['boolean']['boolean'] = 'boolean'
-        self.ttype['!=']['boolean']['boolean'] = 'boolean'
         self.ttype['\/=']['boolean']['boolean'] = 'boolean'
         
 
