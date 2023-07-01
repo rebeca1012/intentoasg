@@ -53,6 +53,12 @@ class TypeChecker(NodeVisitor):
         self.ttype['*']['integer'] = {}
         self.ttype['/']['integer'] = {}
         self.ttype['%']['integer'] = {}
+        self.ttype['>']['integer'] = {}
+        self.ttype['<']['integer'] = {}
+        self.ttype['<=']['integer'] = {}
+        self.ttype['>=']['integer'] = {}
+        self.ttype['=']['integer'] = {}
+        self.ttype['\/=']['integer'] = {}
 
 
 
@@ -61,17 +67,15 @@ class TypeChecker(NodeVisitor):
         self.ttype['\^']['boolean'] = {}
         self.ttype['=']['boolean'] = {}
         self.ttype['\/=']['boolean'] = {}
-        self.ttype['>']['boolean'] = {}
-        self.ttype['<']['boolean'] = {}
-        self.ttype['<=']['boolean'] = {}
-        self.ttype['>=']['boolean'] = {}
         self.ttype['=']['boolean'] = {}
-        self.ttype['\/=']['boolean'] = {}
+
 
         self.ttype[':']['canvas'] = {}
         self.ttype['\'']['canvas'] = {}
         self.ttype['$']['canvas'] = {}
         self.ttype['\|']['canvas'] = {}
+        self.ttype['=']['canvas'] = {}
+        self.ttype['\/=']['canvas'] = {}
 
         #aritmética integer con integer
         self.ttype['+']['integer']['integer'] = 'integer'
@@ -104,6 +108,8 @@ class TypeChecker(NodeVisitor):
         self.ttype['\'']['canvas']['canvas'] = 'canvas'
         self.ttype['$']['canvas']['canvas'] = 'canvas'
         self.ttype['\|']['canvas']['canvas'] = 'canvas'
+        self.ttype['!=']['canvas']['canvas'] = 'boolean'
+        self.ttype['\/=']['canvas']['canvas'] = 'boolean'
 
 
     def check_new_type(self, expr1, op, expr2):
