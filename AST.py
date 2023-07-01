@@ -10,10 +10,6 @@ class Entrada(Node):
         self.declaraciones = declaraciones
         self.hijos = (declaraciones)
 
-    
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Entrada\n{self.hijos.print_object(profund+1)}'    
-
 
 #Declaraciones
 class Declaraciones(Node):

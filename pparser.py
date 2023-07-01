@@ -33,18 +33,6 @@ class Pparser(object):
 
     error = 0
 
-    def find_column(self, input, token):
-        line_start = input.rfind('\n', 0, token.lexpos) + 1
-        return (token.lexpos - line_start) + 1
-    
-    def p_error(self, p):
-        if p:
-            print('Error sintactico:  Token inesperado "%s" en la linea %d, columna %d ' 
-                % (p.type, p.lineno, Pparser.find_column(p.lexer.lexdata, p)))
-        else:
-            print("EOF Inesperado")
-        exit(1)
-
     def p_entrada(self, p):
         """entrada : declaraciones"""
         p[0] = AST.Entrada(p[1])
@@ -233,3 +221,15 @@ class Pparser(object):
             p[0] = AST.Boolean(p[1])
         elif p[1] == Lexer.t_TkCanvasLit:
             p[0] = AST.Canvas(p[1])
+    
+    def find_column(self, input, token):
+        line_start = input.rfind('\n', 0, token.lexpos) + 1
+        return (token.lexpos - line_start) + 1
+    
+    def p_error(self, p):
+        if p:
+            print('Error sintactico:  Token inesperado "%s" en la linea %d, columna %d ' 
+                % (p.type, p.lineno, Pparser.find_column(p.lexer.lexdata, p)))
+        else:
+            print("EOF Inesperado")
+        exit(1)

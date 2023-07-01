@@ -7,7 +7,6 @@ from Symboltable import *
 class NodeVisitor(object):
     def visit(self, node, table=None):
         method = 'visit_' + node.__class__.__name__
-        print(node.__class__.__name__)
         visitor = getattr(self, method, self.generic_visit)
         return visitor(node, table)
 
