@@ -1,7 +1,7 @@
 import sys
 import ply.yacc as yacc
 from pparser import Pparser
-#from TypeChecker import TypeChecker
+from checktipo import TypeChecker
 from lexer import Lexer
 
 archivo = open(input(), "r")
@@ -80,5 +80,5 @@ Pparser = Pparser()
 parser = yacc.yacc(module=Pparser)
 # text = file.read()
 ast = parser.parse(datos, lexer=Pparser.lexer)
-#typeChecker = TypeChecker()
-#typeChecker.visit(ast, None)   # or alternatively ast.accept(typeChecker)
+checktipo = TypeChecker()
+checktipo.visit(ast, None)   # or alternatively ast.accept(typeChecker)

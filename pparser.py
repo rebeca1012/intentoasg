@@ -45,65 +45,65 @@ class Pparser(object):
             print("EOF Inesperado")
         exit(1)
 
-    def p_ENTRADA(self, p):
-        'ENTRADA : DECLARACIONES'
+    def p_entrada(self, p):
+        """entrada : declaraciones"""
         p[0] = AST.Entrada(p[1])
 
-    def p_DECLARACIONES(self, p):
-        '''DECLARACIONES : TkUsing SECUENCIA_DECLARACION TkBegin SECUENCIACION TkEnd'''
+    def p_declaraciones(self, p):
+        """declaraciones : TkUsing secuencia_declaracion TkBegin secuenciacion TkEnd"""
         if len(p) == 3:
             p[0] = AST.Declaraciones(p[2], p[4])
         
 
-    def p_SECUENCIA_DECLARACION(self, p):
-        '''SECUENCIA_DECLARACION : DECLARACION TkPuntoYComa SECUENCIA_DECLARACION 
-                    | VARIABLES TkOf TkType TIPO'''
+    def p_secuencia_declaracion(self, p):
+        """secuencia_declaracion : declaracion TkPuntoYComa secuencia_declaracion 
+                    | variables TkOf TkType tipo"""
         if len(p) == 4:
             p[0] = AST.Secuencia_Declaracion(p[1], p[3])
         else:
             p[0] = AST.Declaracion(p[1], p[4])
 
-    def p_DECLARACION(self, p):
-        'DECLARACION : VARIABLES TkOf TkType TIPO'
+    def p_declaracion(self, p):
+        """declaracion : variables TkOf TkType tipo"""
         p[0] = AST.Declaracion(p[1], p[4])
         
 
-    def p_VARIABLES(self, p):
-        '''VARIABLES : TkIdent TkComa VARIABLES
-                    | TkIdent'''
+    def p_variables(self, p):
+        """variables : TkIdent TkComa variables
+                    | TkIdent"""
         if len(p) == 4:
             p[0] = AST.Variables(p[1], p[3])
         else:
             p[0] = AST.Id(p[1])
 
-    def p_TIPO(self, p):
-        '''TIPO : TkInteger 
+    def p_tipo(self, p):
+        """tipo : TkInteger 
                 | TkBoolean 
-                | TkCanvas'''
+                | TkCanvas"""
         p[0] = AST.Tipo(p[1])
 
-    def p_SECUENCIACION(self, p):
-        '''SECUENCIACION : INSTRUCCION_IF SECUENCIACION
-                        | INSTRUCCION_WITH SECUENCIACION
-                        | INSTRUCCION_FROM SECUENCIACION
-                        | INSTRUCCION_WHILE SECUENCIACION
-                        | INSTRUCCION_ASIGNACION SECUENCIACION
-                        | INSTRUCCION_IO SECUENCIACION
-                        | DECLARACIONES2 SECUENCIACION'''
+    def p_secuenciacion(self, p):
+        """secuenciacion : instruccion_if secuenciacion
+                        | instruccion_with secuenciacion
+                        | instruccion_from secuenciacion
+                        | instruccion_while secuenciacion
+                        | instruccion_asignacion secuenciacion
+                        | instruccion_io secuenciacion
+                        | declaraciones_2 secuenciacion"""
         p[0] = AST.Secuenciacion(p[1], p[2])
 
-    def p_SECUENCIACION_1(self, p):
-        '''SECUENCIACION : '''
+    def p_secuenciacion_1(self, p):
+        """secuenciacion : """
         p[0] = AST.Empty()
 
-    def p_DECLARACIONES2(self, p):
-        '''DECLARACIONES2 : TkUsing SECUENCIA_DECLARACION TkBegin SECUENCIACION TkEnd'''
+    def p_declaraciones_2(self, p):
+        """declaraciones_2 : TkUsing secuencia_declaracion TkBegin secuenciacion TkEnd"""
         if len(p) == 3:
             p[0] = AST.Declaraciones2(p[2], p[4])
 
-    def p_INSTRUCCION_IF(self, p):
-        '''INSTRUCCION_IF : TkIf EXPRESION TkThen SECUENCIACION TkOtherwise SECUENCIACION TkDone
-                        | TkIf EXPRESION SECUENCIACION TkDone'''
+    def p_instruccion_if(self, p):
+        """instruccion_if : TkIf expresion TkThen secuenciacion TkOtherwise secuenciacion TkDone
+                        | TkIf expresion secuenciacion TkDone"""
         if len(p) == 7:
             if p(2):
                 p[0] = AST.If(p[2], p[3])
@@ -113,61 +113,61 @@ class Pparser(object):
             if p[2]:
                 p[0] = AST.If(p[2], p[3])
 
-    def p_INSTRUCCION_WITH(self, p):
-        '''INSTRUCCION_WITH : TkWith TkIdent TkFrom COTA_INF TkTo COTA_SUP TkRepeat SECUENCIACION TkDone TkPuntoYComa'''
+    def p_instruccion_with(self, p):
+        """instruccion_with : TkWith TkIdent TkFrom cota_inf TkTo cota_sup TkRepeat secuenciacion TkDone TkPuntoYComa"""
         p[0] = AST.With(p[2], p[4], p[6], p[8])
 
-    def p_INSTRUCCION_FROM(self, p):
-        '''INSTRUCCION_FROM : TkFrom COTA_INF TkTo COTA_SUP TkRepeat SECUENCIACION TkDone TkPuntoYComa'''
+    def p_instruccion_from(self, p):
+        """instruccion_from : TkFrom cota_inf TkTo cota_sup TkRepeat secuenciacion TkDone TkPuntoYComa"""
         p[0] = AST.From(p[2], p[4], p[6])
 
-    def p_INSTRUCCION_WHILE(self, p):
-        '''INSTRUCCION_WHILE : TkWhile EXPRESION TkRepeat SECUENCIACION TkDone'''
+    def p_instruccion_while(self, p):
+        """instruccion_while : TkWhile expresion TkRepeat secuenciacion TkDone"""
         p[0] = AST.While(p[2], p[4])
 
-    def p_INSTRUCCION_ASIGNACION(self, p):
-        '''INSTRUCCION_ASIGNACION : TkIdent TkAsignacion EXPRESION TkPuntoYComa
-                                | TkIdent TkAsignacion EXPRESION'''
+    def p_instruccion_asignacion(self, p):
+        """instruccion_asignacion : TkIdent TkAsignacion expresion TkPuntoYComa
+                                | TkIdent TkAsignacion expresion"""
         p[0] = AST.Asignacion(p[1], p[3])
 
-    def p_INSTRUCCION_IO(self, p):
-        '''INSTRUCCION_IO : TkRead TkIdent TkPuntoYComa
-                        | TkPrint EXPRESION'''
+    def p_instruccion_io(self, p):
+        """instruccion_io : TkRead TkIdent TkPuntoYComa
+                        | TkPrint expresion"""
         if len(p) == 4:
             p[0] = AST.Read(p[2])
         elif len(p) == 3:
             p[0] = AST.Print(p[2])
 
-    def p_COTA_INF(self, p):
-        '''COTA_INF : EXPRESION_TERMINAL'''
+    def p_cota_inf(self, p):
+        """cota_inf : expresion_terminal"""
         p[0] = AST.CI(p[1])
 
-    def p_COTA_SUP(self, p):
-        '''COTA_SUP : EXPRESION_TERMINAL'''
+    def p_cota_sup(self, p):
+        """cota_sup : expresion_terminal"""
         p[0] = AST.CS(p[1])
 
-    def p_EXPRESION(self, p):
-        '''EXPRESION : EXPRESION_BINARIA
-                    | EXPRESION_UNARIA
-                    | EXPRESION_TERMINAL'''
+    def p_expresion(self, p):
+        """expresion : expresion_binaria
+                    | expresion_unaria
+                    | expresion_terminal"""
         p[0] = AST.Expresion(p[1])
 
-    def p_EXPRESION_BINARIA(self, p):
-        '''EXPRESION_BINARIA : EXPRESION TkMas EXPRESION
-                            | EXPRESION TkMenos EXPRESION
-                            | EXPRESION TkMult EXPRESION
-                            | EXPRESION TkDiv EXPRESION
-                            | EXPRESION TkMod EXPRESION
-                            | EXPRESION TkConjuncion EXPRESION
-                            | EXPRESION TkDisyuncion EXPRESION
-                            | EXPRESION TkMenor EXPRESION
-                            | EXPRESION TkMayor EXPRESION
-                            | EXPRESION TkMenorIgual EXPRESION
-                            | EXPRESION TkMayorIgual EXPRESION
-                            | EXPRESION TkIgual EXPRESION
-                            | EXPRESION TkDesigual EXPRESION
-                            | EXPRESION TkConcatHorizontal EXPRESION
-                            | EXPRESION TkConcatVertical EXPRESION'''
+    def p_expresion_binaria(self, p):
+        """expresion_binaria : expresion TkMas expresion
+                            | expresion TkMenos expresion
+                            | expresion TkMult expresion
+                            | expresion TkDiv expresion
+                            | expresion TkMod expresion
+                            | expresion TkConjuncion expresion
+                            | expresion TkDisyuncion expresion
+                            | expresion TkMenor expresion
+                            | expresion TkMayor expresion
+                            | expresion TkMenorIgual expresion
+                            | expresion TkMayorIgual expresion
+                            | expresion TkIgual expresion
+                            | expresion TkDesigual expresion
+                            | expresion TkConcatHorizontal expresion
+                            | expresion TkConcatVertical expresion"""
         if p[2] == Lexer.t_TkMas:
             p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
         elif p[2] == Lexer.t_TkMenos:
@@ -199,12 +199,12 @@ class Pparser(object):
         elif p[2] == Lexer.t_TkConcatVertical:
             p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
 
-    def p_EXPRESION_UNARIA(self, p):
-        '''EXPRESION_UNARIA : TkParAbre EXPRESION TkParCierra
-                            | TkMenos EXPRESION %prec UMENOS
-                            | EXPRESION TkNegacion
-                            | TkRotacion EXPRESION
-                            | EXPRESION TkTransposicion'''
+    def p_expresion_unaria(self, p):
+        """expresion_unaria : TkParAbre expresion TkParCierra
+                            | TkMenos expresion %prec UMENOS
+                            | expresion TkNegacion
+                            | TkRotacion expresion
+                            | expresion TkTransposicion"""
         if len(p) == 4:    
             if p[1] == Lexer.t_TkParAbre:
                 p[0] = AST.Parentesis(p[2])
@@ -219,12 +219,12 @@ class Pparser(object):
                 p[0] = AST.Transposicion(p[1], p[2])
                 
 
-    def p_EXPRESION_TERMINAL(self, p):   
-        '''EXPRESION_TERMINAL : TkIdent
+    def p_expresion_terminal(self, p):   
+        """expresion_terminal : TkIdent
                             | TkNumLit
                             | TkTrue
                             | TkFalse
-                            | TkCanvasLit'''    
+                            | TkCanvasLit"""    
         if p[1] == Lexer.t_TkIdent:
             p[0] = AST.Id(p[1])
         elif p[1] == Lexer.t_TkNumLit:

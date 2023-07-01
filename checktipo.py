@@ -7,6 +7,7 @@ from Symboltable import *
 class NodeVisitor(object):
     def visit(self, node, table=None):
         method = 'visit_' + node.__class__.__name__
+        print(node.__class__.__name__)
         visitor = getattr(self, method, self.generic_visit)
         return visitor(node, table)
 
@@ -16,7 +17,7 @@ class NodeVisitor(object):
             for elem in node:
                 self.visit(elem)
         else:
-            for child in node.children:
+            for child in node.hijos:
                 if isinstance(child, list):
                     for item in child:
                         if isinstance(item, AST.Node):
