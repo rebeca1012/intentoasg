@@ -24,6 +24,15 @@ class Declaraciones(Node):
 
     #def print_object(self, profund):
     #    return f'{"-"*profund}Declaraciones\n{self.hijos.print_object(profund+1)}'
+
+class Declaraciones2(Node):
+    def __init__(self, secuencia_declaracion, secuenciacion):
+        self.secuencia_declaracion = secuencia_declaracion
+        self.secuenciacion = secuenciacion
+        self.hijos = (secuencia_declaracion, secuenciacion)
+
+    #def print_object(self, profund):
+    #    return f'{"-"*profund}Declaraciones\n{self.hijos.print_object(profund+1)}'
     
 
 #Declaracion

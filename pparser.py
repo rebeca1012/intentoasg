@@ -89,12 +89,17 @@ class Pparser(object):
                         | INSTRUCCION_WHILE SECUENCIACION
                         | INSTRUCCION_ASIGNACION SECUENCIACION
                         | INSTRUCCION_IO SECUENCIACION
-                        | DECLARACIONES SECUENCIACION'''
+                        | DECLARACIONES2 SECUENCIACION'''
         p[0] = AST.Secuenciacion(p[1])
 
     def p_SECUENCIACION_1(self, p):
         '''SECUENCIACION : '''
         p[0] = AST.Empty()
+
+    def p_DECLARACIONES2(self, p):
+        '''DECLARACIONES2 : TkUsing SECUENCIA_DECLARACION TkBegin SECUENCIACION TkEnd'''
+        if len(p) == 3:
+            p[0] = AST.Declaraciones2(p[2], p[4])
 
     def p_INSTRUCCION_IF(self, p):
         '''INSTRUCCION_IF : TkIf EXPRESION TkThen SECUENCIACION TkOtherwise SECUENCIACION TkDone
