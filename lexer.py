@@ -12,6 +12,7 @@ class Lexer(object):
         self.lexer = lex.lex(object = self)
 
     def input(self,datos):
+        self.datos = datos
         self.lexer.input(datos)
 
     def token(self):
@@ -124,21 +125,16 @@ class Lexer(object):
 
     #Manejo de errores:
 
-    # def t_error(self,t):
-    #     global cont
-    #     global datos
-    #     print('Error lexico:   Caracter inesperado "' + t.value[0] + '" en la fila ' + str(t.lineno) + ', columna ' + str(find_column(datos, t)))
-    #     Lexer.cont += 1
-    #     t.lexer.skip(1)
-    def t_error(self, t):
-        print("Illegal character '{0}' ({1}) in line {2}".format(t.value[0], hex(ord(t.value[0])), t.lexer.lineno))
-        Lexer.error += 1
+    def t_error(self,t):
+        print('Error lexico:   Caracter inesperado "' + t.value[0] + '" en la fila ' + str(t.lineno) + ', columna ' + str(self.find_column(self.datos, t)))
+        self.cont += 1
         t.lexer.skip(1)
+    
 
     #Calculo de columna:
 
     def find_column(self, input, token):
-        line_start = self.input.rfind('\n', 0, token.lexpos) + 1
+        line_start = input.rfind('\n', 0, token.lexpos) + 1
         return (token.lexpos - line_start) + 1
 
 
