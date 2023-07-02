@@ -8,8 +8,7 @@ class Node(object):
 class Entrada(Node):
     def __init__(self, declaraciones):
         self.declaraciones = declaraciones
-        self.hijos = (declaraciones)
-
+        self.hijos = declaraciones
 
 #Declaraciones
 class Declaraciones(Node):
@@ -18,18 +17,11 @@ class Declaraciones(Node):
         self.secuenciacion = secuenciacion
         self.hijos = (secuencia_declaracion, secuenciacion)
 
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Declaraciones\n{self.hijos.print_object(profund+1)}'
-
 class Declaraciones2(Node):
     def __init__(self, secuencia_declaracion, secuenciacion):
         self.secuencia_declaracion = secuencia_declaracion
         self.secuenciacion = secuenciacion
         self.hijos = (secuencia_declaracion, secuenciacion)
-
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Declaraciones\n{self.hijos.print_object(profund+1)}'
-    
 
 #Declaracion
 class Declaracion(Node):
@@ -37,10 +29,7 @@ class Declaracion(Node):
         self.variables = variables
         self.tipo = tipo
         self.hijos = (variables, tipo)
-        
-    
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.hijos}'
+
 
 #Secuencia Declaración
 class Secuencia_Declaracion(Node):
@@ -48,9 +37,7 @@ class Secuencia_Declaracion(Node):
         self.declaracion = declaracion
         self.secuencia_declaracion = secuencia_declaracion
         self.hijos = (declaracion, secuencia_declaracion)
-    
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.nodo} : {self.hijos}'
+
 
 
 #Variables
@@ -59,9 +46,7 @@ class Variables(Node):
         self.variable = variable
         self.variables = variables
         self.hijos = (variable, variables)
-    
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.nodo} : {self.hijos}'    
+
 
 
 #Tipo
@@ -70,20 +55,12 @@ class Tipo(Node):
         self.tipo = tipo
         self.hijos = tipo 
    
-#     def print_object(self, profund):
-#         return f'{"-"*profund}{self.nodo}'  
-
 
 #Id
 class Id(Node):
     def __init__(self, id):
         self.id = id
         self.hijos = () 
-    
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.nodo}' 
-
-
 
 
 #PALABRAS RESERVADAS --------
@@ -95,8 +72,6 @@ class If(Node):
         self.secuenciacion = secuenciacion 
         self.hijos = (guardia, secuenciacion)
 
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.nodo} : {self.hijos}'
 
 
 #With
@@ -109,8 +84,6 @@ class With(Node):
         self.hijos = (id, cotainf, cotasup, secuenciacion)
         
 
-    #def print_object(self, profund):
-        #return f'{"-"*profund}{self.iterador} : {self.cota_inf} : {self.cota_sup} : {self.secuenciacion}'
 
 class From(Node):
     def __init__(self, cotainf, cotasup, secuenciacion):
@@ -118,10 +91,7 @@ class From(Node):
         self.cotasup = cotasup
         self.secuenciacion = secuenciacion
         self.hijos = (cotainf, cotasup, secuenciacion)
-id, 
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.cota_inf} : {self.cota_sup} : {self.secuenciacion}'    
-    
+ 
 
 class While(Node):
     def __init__(self, expresion, secuenciacion):
@@ -129,8 +99,6 @@ class While(Node):
         self.secuenciacion = secuenciacion
         self.hijos = (expresion, secuenciacion)
 
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.condicion} : {self.secuenciacion}'  
 
 
 class Read(Node):
@@ -138,17 +106,12 @@ class Read(Node):
         self.id = id
         self.hijos = id
 
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.id}'    
 
 class Print(Node):
     def __init__(self, expresion):
         self.expresion = expresion
         self.hijos = expresion
     
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}{self.exp}'    
-
 #------        
 
 #OPERADORES ARITMÉTICOS -------------
@@ -161,20 +124,12 @@ class Expresion_Binaria(Node):
         self.der = der
         self.hijos = (izq, opr, der)
 
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Mas\n{self.exp1.print_object(profund+1)}\n{self.exp2.print_object(profund+1)}'
-
 #Unary Menos
 class UMenos(Node):
     def __init__(self, expresion):
         self.expresion = -expresion
         self.hijos = -expresion
     
-    #def __str__(self):
-    #    return f'{self.hijos}'
-    
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}UMenos\n{self.exp.print_object(profund+1)}'
 
 #Asginación 
 class Asignacion(Node):
@@ -183,9 +138,6 @@ class Asignacion(Node):
         self.der = der
         self.hijos = (der)
     
-    #def print_object(self, profund):
-    #    return f'{"-"*profund}Asignacion\n{self.id.print_object(profund+1)}\n{self.exp.print_object(profund+1)}'
-
 
 #Negación
 class Negacion(Node):
@@ -225,6 +177,7 @@ class Secuenciacion(Node):
         self.instruccion = instruccion
         self.secuenciacion = secuenciacion
         self.hijos = (instruccion, secuenciacion)
+
 
 class CI(Node):
     def __init__(self, terminal):

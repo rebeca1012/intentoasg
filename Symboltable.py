@@ -1,32 +1,32 @@
-class Symbol:
+class Simbolo:
     def __init__(self, name, type):
         self.name = name
         self.type = type
 
-class VariableSymbol(Symbol):
+class SimboloVariable(Simbolo):
     pass
 
-class FunctionSymbol(Symbol):
-    def __init__(self, name, type, arguments):
-        self.name = name
-        self.type = type
-        self.arguments = arguments
+class SimboloScope(Simbolo):
+    def __init__(self, ent, boole, canv):
+        self.ent= ent
+        self.boole = boole
+        self.canv = canv
 
-class SymbolTable(object):
+class TablaSimbolos(object):
 
-    def __init__(self, parent, name): # parent scope and symbol table name
+    def __init__(self, parent, name): # scope padre y nombre de la tabla de simbolos
         self.symbols = {}
         self.name = name
         self.parent = parent
 
-    def put(self, symbol): # put variable symbol or fundef under <name> entry
+    def put(self, symbol): # Agregar simbolo de variable
         if self.symbols.__contains__(symbol.name):
             return False
         else:
             self.symbols[symbol.name]= symbol
             return True
 
-    def get(self, name): # get variable symbol or fundef from <name> entry
+    def get(self, name): # Obtener simbolo de variable
         if self.symbols.__contains__(name):
             return self.symbols[name]
         elif self.parent:

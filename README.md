@@ -15,30 +15,22 @@ Adicionalmente, escogimos el módulo llamado Python Lex-Yacc (PLY) para la imple
 
 ## Resumen de la implementación:
 
-Se creó el archivo pparser.py donde se implementó el parser para Asgard. 
+#Lexer (Taylor's version)
+Se creó una nueva versión del Lexer con una clase  para que fuese más sencillo trabajarlo en conjunto con el Parser.
 
-En primer lugar, se definió la precendencia para los operadores.
+#Nueva etapa, nuevo parser
+Se corrigieron pequeños errores en la gramática y además se logró implementar correctamente el AST (Auxilio, Señor, Tqm). 
 
-Luego, se creó la gramática implementando una función dedicada para cada una de las reglas.
-
-También se incluye el manejo de errores en el archivo pparser.py.
-
-Por otro lado, se creó un archivo "clases.py" donde están las clases auxiliares para la creación del Abstract Syntax Tree (AST).
-
-Finalmente, se utilizó el AST para estructurar la salida de los datos como se estableció en el enunciado de esta etapa.
-
-PD: No se logro crear el AST, por lo que no fue posible hacer el print esperado, sin embargo, se esta generando la tabla del parse (yacc esta reconociendo las reglas sintacticas). El manejo de errores tambien funciona. 
-
-Lo unico que nos freno fue que no se nos ocurrio como crear el arbol correctamente y que los nodos tuviesen los hijos que debian tener... 
-*Inserte_el_meme_mas_conveniente*
-
-PD2: El estado del proyecto en la etapa 2 para la fecha de entrega la conseguira en la carpeta "Entrega_Etapa2" dentro del repositorio de git. 
+#(Cara 'e) Tabla de símbolos
+Para la tabla de símbolos se creó un nuevo archivo llamado Symboltable donde se implementó la estructura de la tabla de 
+símbolos para el proyecto. Cuenta con tres atributos: un diccionario de símbolos donde se almacenarán los símbolos,
+el nombre, y la tabla padre para el manejo de los scopes.
 
 ## Ejecución:
 
 Para ejecutar el programa es necesario tener un archivo con los datos del lexer y luego ejecutar el siguiente comando:
 
->./SintAsgard
+>./ContAsgard
 
 Una vez se ejecuta, es necesario introducir en la línea de comando el nombre del archivo.
 
@@ -48,13 +40,9 @@ En caso de no contar con el modulo ply de python, puede instalarlo utilizando el
 
 # Dificultades en la implementación:
 
-Una de las primeras dificultades que surgió para la segunda etapa del proyecto fue crear la gramática para
-que expresara exactamente las cosas que se requieren. Y luego, fue crear una a una las funciones para
-ello.
+¿Por dónde empezar? Ok, no.
 
-La más grande dificultad fue la creación de la estructura del AST. Se escogió hacerlo como un árbol que 
-tiene una raíz y sus nodos son hijos y tienen hijos. Lograr que los tipos de datos entraran en el lugar
-correcto fue bastante difícil.
+Una de las dificultades más grandes fue trabajar con cada objeto del AST y también de la tabla: ver hacia dónde y cómo
+se enviaba la información y llevar orden de todo ello fue difícil. Lograr que los tipos de datos coincidieran, que estuvieran
+correctos. 
 
-Otra dificultad fue imprimir el AST tal como lo pedía el enunciado. Se hizo varias iteraciones en el archivo
-clases.py para lograr que se imprimiera la estructura correcta.

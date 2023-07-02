@@ -35,17 +35,17 @@ class Pparser(object):
 
     def p_entrada(self, p):
         """entrada : declaraciones"""
+
         p[0] = AST.Entrada(p[1])
 
+
     def p_declaraciones(self, p):
-        """declaraciones : TkUsing secuencia_declaracion TkBegin secuenciacion TkEnd"""
-        if len(p) == 3:
-            p[0] = AST.Declaraciones(p[2], p[4])
-        
+        """declaraciones : TkUsing secuencia_declaracion TkBegin secuenciacion TkEnd"""      
+        p[0] = AST.Declaraciones(p[2], p[4])
 
     def p_secuencia_declaracion(self, p):
         """secuencia_declaracion : declaracion TkPuntoYComa secuencia_declaracion 
-                    | variables TkOf TkType tipo"""
+                    | variables TkOf TkType tipo"""        
         if len(p) == 4:
             p[0] = AST.Secuencia_Declaracion(p[1], p[3])
         else:
@@ -54,7 +54,7 @@ class Pparser(object):
     def p_declaracion(self, p):
         """declaracion : variables TkOf TkType tipo"""
         p[0] = AST.Declaracion(p[1], p[4])
-        
+
 
     def p_variables(self, p):
         """variables : TkIdent TkComa variables
@@ -86,12 +86,13 @@ class Pparser(object):
 
     def p_declaraciones_2(self, p):
         """declaraciones_2 : TkUsing secuencia_declaracion TkBegin secuenciacion TkEnd"""
-        if len(p) == 3:
-            p[0] = AST.Declaraciones2(p[2], p[4])
+        
+        p[0] = AST.Declaraciones2(p[2], p[4])
 
     def p_instruccion_if(self, p):
         """instruccion_if : TkIf expresion TkThen secuenciacion TkOtherwise secuenciacion TkDone
                         | TkIf expresion secuenciacion TkDone"""
+
         if len(p) == 7:
             if p(2):
                 p[0] = AST.If(p[2], p[3])
@@ -103,14 +104,18 @@ class Pparser(object):
 
     def p_instruccion_with(self, p):
         """instruccion_with : TkWith TkIdent TkFrom cota_inf TkTo cota_sup TkRepeat secuenciacion TkDone TkPuntoYComa"""
+
         p[0] = AST.With(p[2], p[4], p[6], p[8])
 
     def p_instruccion_from(self, p):
         """instruccion_from : TkFrom cota_inf TkTo cota_sup TkRepeat secuenciacion TkDone TkPuntoYComa"""
+
         p[0] = AST.From(p[2], p[4], p[6])
+
 
     def p_instruccion_while(self, p):
         """instruccion_while : TkWhile expresion TkRepeat secuenciacion TkDone"""
+
         p[0] = AST.While(p[2], p[4])
 
     def p_instruccion_asignacion(self, p):
@@ -127,21 +132,19 @@ class Pparser(object):
             p[0] = AST.Print(p[2])
 
     def p_cota_inf(self, p):
-        """cota_inf : expresion_terminal"""
+        """cota_inf : expresion""" 
         p[0] = AST.CI(p[1])
 
+
     def p_cota_sup(self, p):
-        """cota_sup : expresion_terminal"""
+        """cota_sup : expresion"""
+ 
         p[0] = AST.CS(p[1])
 
-    def p_expresion(self, p):
-        """expresion : expresion_binaria
-                    | expresion_unaria
-                    | expresion_terminal"""
-        p[0] = AST.Expresion(p[1])
+
 
     def p_expresion_binaria(self, p):
-        """expresion_binaria : expresion TkMas expresion
+        """expresion  :       expresion TkMas expresion
                             | expresion TkMenos expresion
                             | expresion TkMult expresion
                             | expresion TkDiv expresion
@@ -155,40 +158,12 @@ class Pparser(object):
                             | expresion TkIgual expresion
                             | expresion TkDesigual expresion
                             | expresion TkConcatHorizontal expresion
-                            | expresion TkConcatVertical expresion"""
-        if p[2] == Lexer.t_TkMas:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkMenos:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkMult:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkDiv:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkMod:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkConjuncion:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkDisyuncion:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkMenor:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkMayor:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkMenorIgual:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkMayorIgual:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkIgual:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkDesigual:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkConcatHorizontal:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
-        elif p[2] == Lexer.t_TkConcatVertical:
-            p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
+                            | expresion TkConcatVertical expresion"""                           
+       
+        p[0] = AST.Expresion_Binaria(p[1], p[2], p[3])
 
     def p_expresion_unaria(self, p):
-        """expresion_unaria : TkParAbre expresion TkParCierra
+        """expresion      : TkParAbre expresion TkParCierra
                             | TkMenos expresion %prec UMENOS
                             | expresion TkNegacion
                             | TkRotacion expresion
@@ -207,21 +182,28 @@ class Pparser(object):
                 p[0] = AST.Transposicion(p[1], p[2])
                 
 
-    def p_expresion_terminal(self, p):   
-        """expresion_terminal : TkIdent
-                            | TkNumLit
-                            | TkTrue
-                            | TkFalse
-                            | TkCanvasLit"""    
-        if p[1] == Lexer.t_TkIdent:
-            p[0] = AST.Id(p[1])
-        elif p[1] == Lexer.t_TkNumLit:
-            p[0] = AST.Integer(p[1])
-        elif (p[1] == Lexer.t_TkTrue) | (p[1] == Lexer.t_TkFalse):
-            p[0] = AST.Boolean(p[1])
-        elif p[1] == Lexer.t_TkCanvasLit:
-            p[0] = AST.Canvas(p[1])
+    def p_expresion_constante(self, p):
+        """expresion : constante"""
+        p[0] = p[1]
     
+    def p_expresion_ident(self, p):
+        """expresion : TkIdent"""
+        p[0] = AST.Id(p[1])
+
+    def p_constante_entero(self, p):
+        """constante : TkNumLit"""
+        p[0] = AST.Integer(p[1])
+
+    def p_constante_boolean(self, p):
+        """constante : TkTrue
+                     | TkFalse """
+        p[0] = AST.Boolean(p[1])
+        
+    def p_constante_canvas(self, p):
+        """constante : TkCanvasLit"""
+
+        p[0] = AST.Canvas(p[1])
+
     def find_column(self, input, token):
         line_start = input.rfind('\n', 0, token.lexpos) + 1
         return (token.lexpos - line_start) + 1

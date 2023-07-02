@@ -81,4 +81,6 @@ parser = yacc.yacc(module=Pparser)
 # text = file.read()
 ast = parser.parse(datos, lexer=Pparser.lexer)
 checktipo = TypeChecker()
-checktipo.visit(ast, None)   # or alternatively ast.accept(typeChecker)
+#checktipo.visit(ast, None)   # or alternatively ast.accept(typeChecker)
+
+ast.accept(checktipo)
